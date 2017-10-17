@@ -76,8 +76,8 @@ public class Transaction {
 
         allTransactions.append(transactionBuilder);
 
-        if (Run.transactions.size() > 1)
-            allTransactions.append(Run.transactions.get(TRANSACTION_ID-1).getHash());
+        if (Run.transactions.size() > 0)
+            allTransactions.append(Run.transactions.get(TRANSACTION_ID-2).getHash());
 
         try {
             byte[] bytes = allTransactions.toString().getBytes("UTF-8");
