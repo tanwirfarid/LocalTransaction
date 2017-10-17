@@ -18,16 +18,17 @@ public class Transaction {
     private final int PROCESS_ID = 1;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy-HH:mm:ss");
     private final String transactionText;
+    private final String hash;
+
     private LocalDateTime time;
     private String timeText;
 
     private String text;
 
 
-
     public Transaction(String text) {
 
-        TRANSACTION_ID = (Run.transactions.isEmpty()) ? 1 : Run.transactions.get(Run.transactions.size()-1).TRANSACTION_ID + 1;
+        TRANSACTION_ID = (Run.transactions.isEmpty()) ? 1 : Run.transactions.get(Run.transactions.size() - 1).TRANSACTION_ID + 1;
 
         this.text = text;
 
@@ -35,17 +36,19 @@ public class Transaction {
         this.timeText = time.format(formatter);
 
         this.transactionText = calcTransactionText();
+        this.hash = this.transactionText.substring(transactionText.length() - 65);
     }
 
     public Transaction(String text, String fakeTime) {
 
-        TRANSACTION_ID = (Run.transactions.isEmpty()) ? 1 : Run.transactions.get(Run.transactions.size()-1).TRANSACTION_ID + 1;
+        TRANSACTION_ID = (Run.transactions.isEmpty()) ? 1 : Run.transactions.get(Run.transactions.size() - 1).TRANSACTION_ID + 1;
 
         this.text = text;
 
         this.timeText = fakeTime;
 
         this.transactionText = calcTransactionText();
+        this.hash = this.transactionText.substring(transactionText.length() - 65);
     }
 
     private String calcTransactionText() {
@@ -67,11 +70,14 @@ public class Transaction {
         StringBuilder allTransactions = new StringBuilder();
 
 
-        for (int i = 0; i < TRANSACTION_ID - 1; i++) {
+        /*for (int i = 0; i < TRANSACTION_ID - 1; i++) {
             allTransactions.append(Run.transactions.get(i).getTransactionText());
-        }
+        }*/
 
         allTransactions.append(transactionBuilder);
+
+        if (Run.transactions.size() > 1)
+            allTransactions.append(Run.transactions.get(TRANSACTION_ID-1).getHash());
 
         try {
             byte[] bytes = allTransactions.toString().getBytes("UTF-8");
@@ -93,4 +99,9 @@ public class Transaction {
     public String getTransactionText() {
         return transactionText;
     }
+
+    public String getHash() {
+        return hash;
+    }
+
 }
