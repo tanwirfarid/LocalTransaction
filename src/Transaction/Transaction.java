@@ -36,7 +36,7 @@ public class Transaction {
         this.timeText = time.format(formatter);
 
         this.transactionText = calcTransactionText();
-        this.hash = this.transactionText.substring(transactionText.length() - 65);
+        this.hash = this.transactionText.substring(transactionText.length() - 63);
     }
 
     public Transaction(String text, String fakeTime) {
@@ -91,7 +91,6 @@ public class Transaction {
         }
 
         transactionBuilder.append(String.format("%x", new BigInteger(1, digest)).toUpperCase());
-        transactionBuilder.append("\n");
 
         return transactionBuilder.toString();
     }

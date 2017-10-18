@@ -21,23 +21,23 @@ public class Run {
         transactions.add(new Transaction("Test3"));
 
         for (Transaction transaction : transactions) {
-            System.out.print(transaction.getTransactionText());
+            System.out.println(transaction.getTransactionText());
         }
 
         for (int i = 0; i < 1000; i++) {
             transactions.add(new Transaction(String.valueOf(Math.round(Math.random() * 1000))));
         }
-        System.out.print(transactions.get(1002).getHash());
+        System.out.println(transactions.get(1002).getHash());
 
         Instant end = Instant.now();
 
         Duration timeElapsed = Duration.between(start, end);
 
-        System.out.print(timeElapsed.toMillis()+"\n");
+        System.out.println(timeElapsed.toMillis());
 
         start = Instant.now();
         transactions.add(new Transaction(String.valueOf(Math.round(Math.random() * 1000))));
-        System.out.print(transactions.get(1003).getTransactionText());
+        System.out.println(transactions.get(1003).getTransactionText());
         end = Instant.now();
 
         timeElapsed = Duration.between(start, end);
